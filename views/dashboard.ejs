@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="window.location='/dashboard/list';">Your checkouts</button>
+    <br><br>
+    <table border="2" >
+        <tr>
+            <th style="padding: 5px;">ID</th>
+            <th style="padding: 5px;">Books</th>
+            <th style="padding: 5px;">Author</th>
+            <th style="padding: 5px;"></th>
+        </tr>
+        
+        <%
+        if(userData.length!=0){
+        var i=1;
+        userData.forEach(function(data){
+        %>
+        <tr>
+            <td style="padding: 5px;"><%=data.id; %></td>
+            <td style="padding: 5px;"><%=data.name %></td>
+            <td style="padding: 5px;"><%=data.author %></td>
+            
+            <td style="padding: 5px;"><button>Checkout</button></td>
+            
+        </tr>
+        <%  i++; }) %>
+        <% } else{ %>
+            <tr>
+                <td colspan="7">No Data Found</td>
+            </tr>
+        <% } %>
+    </table>
+    <br>
+     <button class="logout-btn" onclick="window.location='/signin/logout'">
+      Logout
+    </button>
+</body>
+</html>

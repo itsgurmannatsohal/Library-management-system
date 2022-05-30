@@ -9,23 +9,30 @@ exports.viewbooks = (req, res) => {
   db.query(sql, function (err, data, fields) {
     if (err) throw err;
     console.log(data);
-    //render ejs file for admin
+    res.render("adminBooks", { title: "Books", userData: data });
   });
+};
+
+exports.viewaddbooks = (req, res) => {
+  res.sendFile(
+    "/home/patronus/Desktop/VS Code/Library/static/html/addBooks.html"
+  );
 };
 
 exports.addbooks = (req, res) => {
   const { bookName, authorName } = req.body;
   var sql =
-    "ALTER TABLE books ADD name =" +
+    "INSERT INTO books (name, author, status) VALUES (" +
     db.escape(bookName) +
-    ", author=" +
+    ", " +
     db.escape(authorName) +
-    ", status= 1;";
+    ", 0);";
   db.query(sql, function (err, data, fields) {
     if (err) throw err;
     console.log(data);
-    //redirect to viewbooks
+    res.redirect("/admin/books")
   });
+  
 };
 
 //Assuming we know book id

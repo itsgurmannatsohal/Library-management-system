@@ -7,10 +7,10 @@
     <title>Login</title>
   </head>
   <body>
-    <button>Back to user</button>
+    <button onclick="window.location='/signin';">Back to user</button>
     <br /><br />
-    <form>
-      Username: <input type="number" name="enrolnum" /> Password:
+    <form action="/admin" method="post">
+      Username: <input type="text" name="username" /> Password:
       <input type="password" name="pass" />
       <input type="submit" value="Log In" id="adminlogin_btn" />
     </form>

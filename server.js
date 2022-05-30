@@ -26,7 +26,7 @@ const adminRouter = require("./server/routers/adminRouter.js")
 
 
 app.use("/signin", loginRouter)
-app.use("/", dashboardRouter);
+app.use("/dashboard", dashboardRouter);
 app.use("/admin", adminRouter)
 
 port = process.env.PORT || 5000;

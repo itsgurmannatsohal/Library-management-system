@@ -9,19 +9,20 @@ exports.viewdashboard = (req, res) => {
   db.query(sql, function (err, data, fields) {
     if (err) throw err;
     console.log(data);
-    //render ejs file
+    res.render("dashboard", { title: "Dashboard", userData: data });
   });
 };
 
 exports.viewlist = (req, res) => {
+  console.log("hi");
   var sql =
-    "SELECT name, status FROM books WHERE enrolmentNumber =" +
+    "SELECT name, author FROM books WHERE enrolmentNumber =" +
     req.session.eno +
-    "AND status= '0';";
+    " AND status= 1;";
   db.query(sql, function (err, data, fields) {
     if (err) throw err;
     console.log(data);
-    //render ejs file
+    res.render("checkoutlist", { title: "List", userData: data });
   });
 };
 

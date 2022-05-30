@@ -6,11 +6,11 @@ app.use(express.urlencoded({ extended: true }));
 
 exports.viewrequests = (req, res) => {
   var sql =
-    "SELECT books.name, books.author, requests.enrolmentNumber FROM books INNER JOIN requests ON books.enrolmentNumber= requests.enrolmentNumber";
+    "SELECT books.name, books.author, requests.enrolmentNumber FROM books INNER JOIN requests ON books.id= requests.id";
   db.query(sql, function (err, data, fields) {
     if (err) throw err;
     console.log(data);
-    //render requests ejs file for admin
+    res.render("requests", { title: "Requests", userData: data });
   });
 };
 

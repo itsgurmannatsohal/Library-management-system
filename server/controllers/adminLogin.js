@@ -10,7 +10,9 @@ const saltRounds = 10;
 //Sign in
 
 exports.viewlogin = (req, res) => {
-  res.sendFile("../../static/html/adminlogin");
+  res.sendFile(
+    "/home/patronus/Desktop/VS Code/Library/static/html/adminlogin.html"
+  );
 };
 
 exports.postlogin = (req, res) => {
@@ -25,10 +27,9 @@ exports.postlogin = (req, res) => {
         } else {
           console.log(rows[0]["password"]);
 
-          const verified = bcrypt.compareSync(pass, rows[0]["password"]);
-          if (verified) {
+          if (pass == rows[0]["password"]) {
             console.log("Admin login successful");
-            res.redirect("/books");
+            res.redirect("/admin/books");
           } else {
             res.send("Incorrect Username or Password");
           }
