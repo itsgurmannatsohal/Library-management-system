@@ -5,16 +5,16 @@ const db = require("../../database");
 app.use(express.urlencoded({ extended: true }));
 
 exports.viewdashboard = (req, res) => {
-  var sql = "SELECT id, name, author FROM books";
+  var sql = "SELECT id, name, author FROM books WHERE status = 0";
   db.query(sql, function (err, data, fields) {
     if (err) throw err;
     console.log(data);
-    res.render("dashboard", { title: "Dashboard", userData: data });
+    //res.render("dashboard", { title: "Dashboard", userData: data });
+    res.render("dashboard1", { layout: "dashboard", data: data });
   });
 };
 
 exports.viewlist = (req, res) => {
-  console.log("hi");
   var sql =
     "SELECT name, author FROM books WHERE enrolmentNumber =" +
     req.session.eno +
@@ -22,40 +22,42 @@ exports.viewlist = (req, res) => {
   db.query(sql, function (err, data, fields) {
     if (err) throw err;
     console.log(data);
-    res.render("checkoutlist", { title: "List", userData: data });
+    //res.render("checkoutlist", { title: "List", userData: data });
+    res.render("checkoutList1", { layout: "checkoutList", data: data });
   });
 };
 
-//Assuming we know the book id
-
-var idx;
-
 //Request check out
-function requestOut(req, res) {
+exports.requestOut = (req, res) => {
+  const { bookID } = req.body;
+  console.log(bookID);
+
   var sql =
-    "ALTER TABLE requests ADD id =" +
-    db.escape(idx) +
-    ", enrolmentNumber=" +
+    "INSERT INTO requests (id, enrolmentNumber, type) VALUES (" +
+    db.escape(bookID) +
+    ", " +
     req.session.eno +
-    "status= 'out' ;";
+    ", 'check-out' );";
   db.query(sql, function (err, data, fields) {
     if (err) throw err;
     console.log(data);
   });
-}
-
-var idy;
+  res.send("Request sent");
+};
 
 //Request check in
-function requestIn(req, res) {
+exports.requestIn = (req, res) => {
+  const { bookID } = req.body;
+  console.log(bookID);
   var sql =
-    "ALTER TABLE requests ADD id =" +
-    db.escape(idy) +
-    ", enrolmentNumber=" +
+    "INSERT INTO requests (id, enrolmentNumber, type) VALUES (" +
+    db.escape(bookID) +
+    ", " +
     req.session.eno +
-    "status= 'in';";
+    ", 'check-in' );";
   db.query(sql, function (err, data, fields) {
     if (err) throw err;
     console.log(data);
+    res.send("Request sent");
   });
-}
+};

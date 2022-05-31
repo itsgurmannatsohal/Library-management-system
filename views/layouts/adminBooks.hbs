@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,24 +6,25 @@
     <title>Document</title>
   </head>
   <body>
+    <button onclick="window.location='/admin/books/add'">Add books</button>
+    <button onclick="window.location='/admin/requests'">
+      Resolve requests
+    </button>
+    <br /><br />
     <table border="2">
       <tr>
+        <th style="padding: 5px">ID</th>
         <th style="padding: 5px">Books</th>
         <th style="padding: 5px">Author</th>
         <th style="padding: 5px"></th>
       </tr>
 
-      <% if(userData.length!=0){ var i=1; userData.forEach(function(data){ %>
-      <tr>
-        <td style="padding: 5px"><%=data.name; %></td>
-        <td style="padding: 5px"><%=data.author %></td>
-        <td style="padding: 5px"><button>Check-in</button></td>
-      </tr>
-      <% i++; }) %> <% } else{ %>
-      <tr>
-        <td colspan="7">No Data Found</td>
-      </tr>
-      <% } %>
+      {{{body}}}
+
     </table>
+    <br />
+    <button class="logout-btn" onclick="window.location='/signin/logout'">
+      Logout
+    </button>
   </body>
 </html>

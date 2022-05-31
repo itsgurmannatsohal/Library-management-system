@@ -1,0 +1,22 @@
+{{#each data}}
+
+  <tr>
+    <td>{{this.id}}</td>
+    <td>{{this.name}}</td>
+    <td>{{this.author}}</td>
+    <td>{{this.enrolmentNumber}}</td>
+    <td>{{this.type}}</td>
+    <td>{{this.status}}</td>
+
+    <td><button
+        id="accept-btn"
+        onclick="acceptId({{this.id}}, {{this.status}}, {{this.enrolmentNumber}})"
+      >Accept</button></td>
+    <td><button
+        id="deny-btn"
+        onclick="denyId({{this.id}}, {{this.status}})"
+      >Deny</button></td>
+
+  </tr>
+
+{{/each}}

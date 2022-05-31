@@ -1,0 +1,16 @@
+{{#each data}}
+
+  <tr>
+
+    <td>{{this.id}}</td>
+    <td>{{this.name}}</td>
+    <td>{{this.author}}</td>
+
+    <td><button
+        id="checkout-btn"
+        onclick="checkoutId({{this.id}})"
+      >Check-out</button></td>
+
+  </tr>
+
+{{/each}}

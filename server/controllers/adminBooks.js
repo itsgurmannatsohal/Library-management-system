@@ -9,7 +9,8 @@ exports.viewbooks = (req, res) => {
   db.query(sql, function (err, data, fields) {
     if (err) throw err;
     console.log(data);
-    res.render("adminBooks", { title: "Books", userData: data });
+    //res.render("adminBooks", { title: "Books", userData: data });
+    res.render("adminBooks1", { layout: "adminBooks", data: data });
   });
 };
 

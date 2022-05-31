@@ -13,5 +13,7 @@ router.get("/books/add", adminBooks.viewaddbooks);
 router.post("/books/add", adminBooks.addbooks);
 
 router.get("/requests", adminRequests.viewrequests);
+router.post("/requests/accept", adminRequests.accept);
+router.post("/requests/deny", adminRequests.deny);
 
 module.exports = router;
