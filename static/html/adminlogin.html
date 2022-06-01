@@ -4,15 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../public/stylesheets/style.css">
     <title>Login</title>
   </head>
   <body>
-    <button onclick="window.location='/signin';">Back to user</button>
+    <div>
+      <button onclick="window.location='/signin';">Back to user</button>
     <br /><br />
     <form action="/admin" method="post">
       Username: <input type="text" name="username" /> Password:
       <input type="password" name="pass" />
       <input type="submit" value="Log In" id="adminlogin_btn" />
     </form>
+    </div>
   </body>
 </html>

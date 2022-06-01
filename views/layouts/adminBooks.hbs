@@ -3,29 +3,33 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../public/stylesheets/style.css" />
     <title>Document</title>
   </head>
   <body>
-    <button onclick="window.location='/admin/books/add'">Add books</button>
-    <button onclick="window.location='/admin/requests'">
-      Resolve requests
-    </button>
-    <br /><br />
-    <table border="2">
-      <tr>
-        <th style="padding: 5px">ID</th>
-        <th style="padding: 5px">Books</th>
-        <th style="padding: 5px">Author</th>
-        <th style="padding: 5px"></th>
-      </tr>
+    <div>
+      <button onclick="window.location='/admin/books/add'">Add books</button>
+      <button onclick="window.location='/admin/requests'">
+        Resolve requests
+      </button>
+      <br /><br />
+      <h2>List of books</h2>
+      <table border="2">
+        <tr>
+          <th style="padding: 5px">ID</th>
+          <th style="padding: 5px">Books</th>
+          <th style="padding: 5px">Author</th>
+          <th style="padding: 5px"></th>
+        </tr>
 
-      {{{body}}}
+        {{{body}}}
 
-    </table>
-    <br />
-    <button class="logout-btn" onclick="window.location='/signin/logout'">
-      Logout
-    </button>
+      </table>
+      <br />
+      <button class="logout-btn" onclick="window.location='/signin/logout'">
+        Logout
+      </button>
+    </div>
   </body>
   <script src="../../public/javascripts/resolve.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

@@ -3,23 +3,27 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../public/stylesheets/style.css" />
     <title>Document</title>
   </head>
   <body>
-    <table border="2">
-      <tr>
-        <th style="padding: 5px">ID</th>
-        <th style="padding: 5px">Books</th>
-        <th style="padding: 5px">Author</th>
-        <th style="padding: 5px">Enrolment Number</th>
-        <th style="padding: 5px">Request type</th>
-        <th style="padding: 5px">Book status</th>
-        <th style="padding: 5px"></th>
-        <th style="padding: 5px"></th>  
-      </tr>
+    <div>
+      <h2>Resolve requests</h2>
+      <table border="2">
+        <tr>
+          <th style="padding: 5px">ID</th>
+          <th style="padding: 5px">Books</th>
+          <th style="padding: 5px">Author</th>
+          <th style="padding: 5px">Enrolment Number</th>
+          <th style="padding: 5px">Request type</th>
+          <th style="padding: 5px">Book status</th>
+          <th style="padding: 5px"></th>
+          <th style="padding: 5px"></th>
+        </tr>
 
-      {{{body}}}
-    </table>
+        {{{body}}}
+      </table>
+    </div>
   </body>
   <script src="../../public/javascripts/resolve.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
