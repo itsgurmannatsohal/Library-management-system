@@ -7,7 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 exports.viewrequests = (req, res) => {
   if (req.session.admin) {
     var sql =
-      "SELECT books.id, books.name, books.author, requests.enrolmentNumber, requests.type, requests.status, books.available FROM books INNER JOIN requests ON books.id= requests.id WHERE requests.status = 2";
+      "SELECT books.id, books.name, books.author, requests.enrolmentNumber, requests.req, requests.type, requests.status, books.available FROM books INNER JOIN requests ON books.id= requests.id WHERE requests.status = 2";
     db.query(sql, function (err, data, fields) {
       if (err) throw err;
       console.log(data);
@@ -27,13 +27,8 @@ exports.accept = (req, res) => {
     x = y = available;
     x = x - 1;
     y = y + 1;
-    console.log("accepted");
-    var sql =
-      "UPDATE requests SET status = 1 WHERE id=" +
-      db.escape(bookID) +
-      " AND enrolmentNumber=" +
-      db.escape(enrolmentNumber) +
-      ";";
+
+    var sql = "SELECT * FROM requests";
 
     db.query(sql, function (err, data, fields) {
       if (err) throw err;
@@ -49,7 +44,30 @@ exports.accept = (req, res) => {
 
         db.query(sql, function (err, data, fields) {
           if (err) throw err;
-          //console.log(data);
+          db.query(
+            "UPDATE requests SET status = 1 WHERE id=" +
+              db.escape(bookID) +
+              " AND enrolmentNumber=" +
+              db.escape(enrolmentNumber) +
+              " AND type=" +
+              db.escape(requestType) +
+              ";",
+            (err, rows) => {
+              if (err) {
+                console.log(err);
+              }
+              db.query(
+                "UPDATE requests SET type = 7 WHERE status =1 AND enrolmentNumber=" +
+                  db.escape(enrolmentNumber) +
+                  " AND type=9;",
+                (err, rows) => {
+                  if (err) {
+                    console.log(err);
+                  }
+                }
+              );
+            }
+          );
           res.redirect("/admin/requests");
         });
       } else {
@@ -65,7 +83,21 @@ exports.accept = (req, res) => {
 
         db.query(sql, function (err, data, fields) {
           if (err) throw err;
-          //console.log(data);
+          db.query(
+            "UPDATE requests SET status = 1 WHERE id=" +
+              db.escape(bookID) +
+              " AND enrolmentNumber=" +
+              db.escape(enrolmentNumber) +
+              " AND type=" +
+              db.escape(requestType) +
+              ";",
+            (err, rows) => {
+              if (err) {
+                console.log(err);
+              }
+            }
+          );
+
           res.redirect("/admin/requests");
         });
       }

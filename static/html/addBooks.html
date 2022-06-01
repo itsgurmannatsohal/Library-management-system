@@ -11,9 +11,9 @@
     <div>
       <h2>Add a book</h2>
       <form action="/admin/books/add" method="post">
-        Book name: <input type="text" name="bookName" /> <br />
-        Author: <input type="text" name="authorName" /> <br />
-        No of copies: <input type="number" name="copies" /><br />
+        Book name: <input type="text" name="bookName" required /> <br />
+        Author: <input type="text" name="authorName" required /> <br />
+        No of copies: <input type="number" name="copies" required /><br />
         <input type="submit" value="Add" id="add_btn" />
       </form>
     </div>
