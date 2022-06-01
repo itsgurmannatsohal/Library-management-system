@@ -16,7 +16,7 @@ exports.viewdashboard = (req, res) => {
 
 exports.viewlist = (req, res) => {
   var sql =
-    "SELECT name, author FROM books WHERE enrolmentNumber =" +
+    "SELECT * FROM books WHERE enrolmentNumber =" +
     req.session.eno +
     " AND status= 1;";
   db.query(sql, function (err, data, fields) {

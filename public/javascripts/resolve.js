@@ -19,17 +19,44 @@ function denyId(elem1, elem2) {
 
 function postaccept() {
   console.log("Accepted");
-  axios.post("/admin/requests/accept", {
-    bookID: bookID,
-    bookStatus: bookStatus,
-    enrolmentNumber: enrolmentNumber,
-  });
+  axios
+    .post("/admin/requests/accept", {
+      bookID: bookID,
+      bookStatus: bookStatus,
+      enrolmentNumber: enrolmentNumber,
+    })
+    .then((res) => {
+      console.log(res);
+      window.location.href = "http://localhost:8080/admin/requests";
+    });
 }
 
 function postdeny() {
   console.log("Denied");
-  axios.post("/admin/requests/deny", {
-    bookID: bookID,
-    bookStatus: bookStatus,
-  });
+  axios
+    .post("/admin/requests/deny", {
+      bookID: bookID,
+      bookStatus: bookStatus,
+    })
+    .then((res) => {
+      console.log(res);
+      window.location.href = "http://localhost:8080/admin/requests";
+    });
+}
+
+function deleter(elem) {
+  bookID = elem;
+  console.log(elem);
+  postdel();
+}
+
+function postdel() {
+  axios
+    .post("/admin/books/delete", {
+      bookID: bookID,
+    })
+    .then((res) => {
+      console.log(res);
+      window.location.href = "http://localhost:8080/admin/books";
+    });
 }

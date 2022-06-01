@@ -1,23 +1,20 @@
-let bookID;
 const button1 = document.querySelectorAll(".checkout-btn");
 const button2 = document.querySelectorAll(".checkin-btn");
 
 function checkoutId(elem) {
-  bookID = elem;
   console.log(elem);
-  postcheckout();
+  postcheckout(elem);
 }
 
 function checkinId(elem) {
-  bookID = elem;
   console.log(elem);
-  postcheckin();
+  postcheckin(elem);
 }
 
-function postcheckout() {
+function postcheckout(elem) {
   axios
     .post("/dashboard/requestOut", {
-      bookID: bookID,
+      bookID: elem,
     })
     .then((res) => {
       console.log(res);
@@ -25,11 +22,10 @@ function postcheckout() {
     });
 }
 
-function postcheckin() {
-  console.log("post sent");
+function postcheckin(elem) {
   axios
     .post("/dashboard/requestIn", {
-      bookID: bookID,
+      bookID: elem,
     })
     .then((res) => {
       console.log(res);

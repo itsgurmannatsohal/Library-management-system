@@ -28,6 +28,8 @@ exports.postlogin = (req, res) => {
           console.log(rows[0]["password"]);
 
           if (pass == rows[0]["password"]) {
+            req.session.admin = rows[0].username;
+            console.log(req.session.admin);
             console.log("Admin login successful");
             res.redirect("/admin/books");
           } else {
