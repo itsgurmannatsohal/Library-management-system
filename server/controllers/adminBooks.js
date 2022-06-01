@@ -4,20 +4,15 @@ const res = require("express/lib/response");
 const app = express();
 app.use(express.json());
 const db = require("../../database");
+const alert = require("alert");
 app.use(express.urlencoded({ extended: true }));
-
-// if (req.session.admin === true) {
-//   allow = 1;
-// }
-allow = 1;
 
 exports.viewbooks = (req, res) => {
   if (req.session.admin) {
-    var sql = "SELECT id, name, author FROM books";
+    var sql = "SELECT * FROM books";
     db.query(sql, function (err, data, fields) {
       if (err) throw err;
       console.log(data);
-      //res.render("adminBooks", { title: "Books", userData: data });
       res.render("adminBooks1", { layout: "adminBooks", data: data });
     });
   } else {
@@ -37,13 +32,18 @@ exports.viewaddbooks = (req, res) => {
 
 exports.addbooks = (req, res) => {
   if (req.session.admin) {
-    const { bookName, authorName } = req.body;
+    const { bookName, authorName, copies } = req.body;
+    console.log(copies);
     var sql =
-      "INSERT INTO books (name, author, status) VALUES (" +
+      "INSERT INTO books (name, author, copies, available) VALUES (" +
       db.escape(bookName) +
       ", " +
       db.escape(authorName) +
-      ", 0);";
+      ", " +
+      db.escape(copies) +
+      ", " +
+      db.escape(copies) +
+      ");";
     db.query(sql, function (err, data, fields) {
       if (err) throw err;
       console.log(data);
@@ -54,24 +54,26 @@ exports.addbooks = (req, res) => {
   }
 };
 
-//Deleting books
-exports.deleteBooks = (req, res) => {
+//Plus copies
+exports.plusbooks = (req, res) => {
+  let x, y;
   if (req.session.admin) {
-    const { bookID } = req.body;
+    const { bookID, copies, available } = req.body;
+    x = copies;
+    x = x + 1;
+    y = available;
+    y = y + 1;
     db.query(
-      "DELETE FROM books WHERE id=" + db.escape(bookID) + ";",
+      "UPDATE books SET copies=" +
+        db.escape(x) +
+        ", available=" +
+        db.escape(y) +
+        " WHERE id=" +
+        db.escape(bookID) +
+        ";",
       (err, rows) => {
         if (!err) {
-          db.query(
-            "DELETE FROM books WHERE id=" + db.escape(bookID) + ";",
-            (err, rows) => {
-              if (!err) {
-                console.log("Deleted");
-              } else {
-                console.log(err);
-              }
-            }
-          );
+          console.log("Added 1 book");
         } else {
           console.log(err);
         }
@@ -79,6 +81,43 @@ exports.deleteBooks = (req, res) => {
     );
     console.log(req.body);
     res.redirect("/admin/books");
+  } else {
+    res.redirect("/signin");
+  }
+};
+
+//Minus copies
+exports.minusbooks = (req, res) => {
+  let x, y;
+  if (req.session.admin) {
+    const { bookID, copies, available } = req.body;
+    x = copies;
+    x = x - 1;
+    y = available;
+    y = y - 1;
+    if(y>=0){
+      db.query(
+        "UPDATE books SET copies=" +
+          db.escape(x) +
+          ", available=" +
+          db.escape(y) +
+          " WHERE id=" +
+          db.escape(bookID) +
+          ";",
+        (err, rows) => {
+          if (!err) {
+            console.log("Subtracted 1 book");
+          } else {
+            console.log(err);
+          }
+        }
+      );
+      console.log(req.body);
+      res.redirect("/admin/books");
+    }
+    else{
+      alert("No available books to subtract")
+    }
   } else {
     res.redirect("/signin");
   }

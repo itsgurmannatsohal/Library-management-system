@@ -1,9 +1,8 @@
 const button1 = document.querySelectorAll(".checkout-btn");
 const button2 = document.querySelectorAll(".checkin-btn");
 
-function checkoutId(elem) {
-  console.log(elem);
-  postcheckout(elem);
+function checkoutId(elem1, elem2) {
+  postcheckout(elem1, elem2);
 }
 
 function checkinId(elem) {
@@ -11,10 +10,11 @@ function checkinId(elem) {
   postcheckin(elem);
 }
 
-function postcheckout(elem) {
+function postcheckout(elem1, elem2) {
   axios
     .post("/dashboard/requestOut", {
-      bookID: elem,
+      bookID: elem1,
+      available: elem2,
     })
     .then((res) => {
       console.log(res);

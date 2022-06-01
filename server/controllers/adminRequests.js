@@ -7,11 +7,10 @@ app.use(express.urlencoded({ extended: true }));
 exports.viewrequests = (req, res) => {
   if (req.session.admin) {
     var sql =
-      "SELECT books.id, books.name, books.author, requests.enrolmentNumber, requests.type, books.status FROM books INNER JOIN requests ON books.id= requests.id";
+      "SELECT books.id, books.name, books.author, requests.enrolmentNumber, requests.type, requests.status, books.available FROM books INNER JOIN requests ON books.id= requests.id WHERE requests.status = 2";
     db.query(sql, function (err, data, fields) {
       if (err) throw err;
       console.log(data);
-      //res.render("requests", { title: "Requests", userData: data });
       res.render("request1", { layout: "request", data: data });
     });
   } else {
@@ -22,35 +21,51 @@ exports.viewrequests = (req, res) => {
 //If accepted
 
 exports.accept = (req, res) => {
+  let x, y;
   if (req.session.admin) {
-    const { bookID, bookStatus, enrolmentNumber } = req.body;
-    console.log(bookID, bookStatus, enrolmentNumber);
-    var sql = "DELETE FROM requests WHERE id=" + db.escape(bookID) + ";";
+    const { bookID, requestType, enrolmentNumber, available } = req.body;
+    x = y = available;
+    x = x - 1;
+    y = y + 1;
+    console.log("accepted");
+    var sql =
+      "UPDATE requests SET status = 1 WHERE id=" +
+      db.escape(bookID) +
+      " AND enrolmentNumber=" +
+      db.escape(enrolmentNumber) +
+      ";";
 
     db.query(sql, function (err, data, fields) {
       if (err) throw err;
       console.log(data);
-      if (bookStatus === 1) {
+      if (requestType === 7) {
+        console.log("check in resolved");
         var sql =
-          "UPDATE books SET status = 0 WHERE id=" + db.escape(bookID) + ";";
-
-        db.query(sql, function (err, data, fields) {
-          if (err) throw err;
-          console.log(data);
-          res.redirect("/admin/requests");
-        });
-      } else {
-        var sql =
-          "UPDATE books SET status = 1" +
-          ", enrolmentNumber= " +
-          db.escape(enrolmentNumber) +
+          "UPDATE books SET available=" +
+          db.escape(y) +
           " WHERE id=" +
           db.escape(bookID) +
           ";";
 
         db.query(sql, function (err, data, fields) {
           if (err) throw err;
-          console.log(data);
+          //console.log(data);
+          res.redirect("/admin/requests");
+        });
+      } else {
+        console.log("check out resolved");
+        var sql =
+          "UPDATE books SET enrolmentNumber= " +
+          db.escape(enrolmentNumber) +
+          ", available= " +
+          db.escape(x) +
+          " WHERE id=" +
+          db.escape(bookID) +
+          ";";
+
+        db.query(sql, function (err, data, fields) {
+          if (err) throw err;
+          //console.log(data);
           res.redirect("/admin/requests");
         });
       }
@@ -63,9 +78,14 @@ exports.accept = (req, res) => {
 //If denied
 exports.deny = (req, res) => {
   if (req.session.admin) {
-    const { bookID } = req.body;
+    const { bookID, enrolmentNumber } = req.body;
     console.log(bookID);
-    var sql = "DELETE FROM requests WHERE id=" + db.escape(bookID) + ";";
+    var sql =
+      "UPDATE requests SET status = 0 WHERE id=" +
+      db.escape(bookID) +
+      " AND enrolmentNumber=" +
+      db.escape(enrolmentNumber) +
+      ";";
 
     db.query(sql, function (err, data, fields) {
       if (err) throw err;

@@ -9,10 +9,11 @@ router.post("/", adminLogin.postlogin);
 
 router.get("/books", adminBooks.viewbooks);
 
-router.post("/books/delete", adminBooks.deleteBooks);
-
 router.get("/books/add", adminBooks.viewaddbooks);
 router.post("/books/add", adminBooks.addbooks);
+
+router.post("/books/plus", adminBooks.plusbooks);
+router.post("/books/minus", adminBooks.minusbooks);
 
 router.get("/requests", adminRequests.viewrequests);
 router.post("/requests/accept", adminRequests.accept);

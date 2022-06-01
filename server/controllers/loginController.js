@@ -3,6 +3,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const db = require("../../database");
+const alert = require("alert");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -61,12 +62,9 @@ exports.postsignup = (req, res) => {
       if (!err) {
         if (rows[0] === undefined) {
           if (pass1 == pass2) {
-            
             bcrypt.hash(pass1, saltRounds, function (err, hash) {
               if (!err) {
-                
                 db.query(
-                  
                   "INSERT INTO users ( enrolmentNumber, password) VALUES (" +
                     db.escape(enrolnum) +
                     "," +
@@ -75,21 +73,24 @@ exports.postsignup = (req, res) => {
                   (err, rows) => {
                     if (!err) {
                       console.log(rows);
+                    } else {
+                      console.log(err);
                     }
-                    else{console.log(err)}
                   }
                 );
               } else {
                 console.log(err);
               }
             });
-            console.log("User updated");
+
+            req.session.eno = enrolnum;
+            console.log(req.session.eno);
             res.redirect("/dashboard");
           } else {
-            res.send("Passwords don't match");
+            alert("Passwords dont match");
           }
         } else {
-          res.send("User already exists");
+          alert("User already exists");
         }
       } else {
         console.log(err);

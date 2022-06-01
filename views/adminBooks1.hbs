@@ -4,9 +4,15 @@
     <td>{{this.id}}</td>
     <td>{{this.name}}</td>
     <td>{{this.author}}</td>
+    <td>{{this.copies}}</td>
+    <td>{{this.available}}</td>
 
-    <td><button onclick="deleter({{this.id}})">Delete</button></td>
-
+    <td><button
+        onclick="plus({{this.id}}, {{this.copies}}, {{this.available}})"
+      >+</button></td>
+    <td><button
+        onclick="minus({{this.id}}, {{this.copies}}, {{this.available}})"
+      >-</button></td>
   </tr>
 
 {{/each}}

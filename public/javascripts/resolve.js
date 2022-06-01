@@ -2,18 +2,19 @@ let bookID, bookStatus;
 const button1 = document.querySelectorAll(".accept-btn");
 const button2 = document.querySelectorAll(".deny-btn");
 
-function acceptId(elem1, elem2, elem3) {
+function acceptId(elem1, elem2, elem3, elem4) {
   bookID = elem1;
-  bookStatus = elem2;
+  requestType = elem2;
   enrolmentNumber = elem3;
-  console.log(elem1, elem2, elem3);
+  available = elem4;
+  console.log(elem1, elem2, elem3, elem4);
   postaccept();
 }
 
-function denyId(elem1, elem2) {
+function denyId(elem1, elem2, elem3) {
   bookID = elem1;
-  bookStatus = elem2;
-  console.log(elem1, elem2);
+  requestType = elem2;
+  enrolmentNumber = elem3;
   postdeny();
 }
 
@@ -22,8 +23,9 @@ function postaccept() {
   axios
     .post("/admin/requests/accept", {
       bookID: bookID,
-      bookStatus: bookStatus,
+      requestType: requestType,
       enrolmentNumber: enrolmentNumber,
+      available: available,
     })
     .then((res) => {
       console.log(res);
@@ -36,7 +38,8 @@ function postdeny() {
   axios
     .post("/admin/requests/deny", {
       bookID: bookID,
-      bookStatus: bookStatus,
+      requestType: requestType,
+      enrolmentNumber: enrolmentNumber,
     })
     .then((res) => {
       console.log(res);
@@ -44,16 +47,39 @@ function postdeny() {
     });
 }
 
-function deleter(elem) {
-  bookID = elem;
-  console.log(elem);
-  postdel();
+function plus(elem1, elem2, elem3) {
+  bookID = elem1;
+  copies = elem2;
+  available = elem3;
+  postplus();
 }
 
-function postdel() {
+function minus(elem1, elem2, elem3) {
+  bookID = elem1;
+  copies = elem2;
+  available = elem3;
+  postminus();
+}
+
+function postplus() {
   axios
-    .post("/admin/books/delete", {
+    .post("/admin/books/plus", {
       bookID: bookID,
+      copies: copies,
+      available: available,
+    })
+    .then((res) => {
+      console.log(res);
+      window.location.href = "http://localhost:8080/admin/books";
+    });
+}
+
+function postminus() {
+  axios
+    .post("/admin/books/minus", {
+      bookID: bookID,
+      copies: copies,
+      available: available,
     })
     .then((res) => {
       console.log(res);

@@ -5,16 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../../public/stylesheets/style.css">
+    <link rel="stylesheet" href="../../public/stylesheets/style.css" />
   </head>
   <body>
     <div>
       <h2>Add a book</h2>
       <form action="/admin/books/add" method="post">
-      Book name: <input type="text" name="bookName" /> Author:
-      <input type="text" name="authorName" />
-      <input type="submit" value="Add" id="add_btn" />
-    </form>
+        Book name: <input type="text" name="bookName" /> <br />
+        Author: <input type="text" name="authorName" /> <br />
+        No of copies: <input type="number" name="copies" /><br />
+        <input type="submit" value="Add" id="add_btn" />
+      </form>
     </div>
   </body>
 </html>

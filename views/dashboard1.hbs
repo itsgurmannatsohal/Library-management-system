@@ -5,10 +5,11 @@
     <td>{{this.id}}</td>
     <td>{{this.name}}</td>
     <td>{{this.author}}</td>
+    <td>{{this.available}}</td>
 
     <td><button
         id="checkout-btn"
-        onclick="checkoutId({{this.id}})"
+        onclick="checkoutId({{this.id}}, {{this.available}})"
       >Check-out</button></td>
 
   </tr>
