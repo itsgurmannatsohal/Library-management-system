@@ -3,10 +3,10 @@ var mysql = require("mysql");
 
 var db = mysql.createPool({
   connectionLimit: 100,
-  host: "localhost",
+  host: process.env.HOST,
   port: 3306,
-  user: "root",
-  database: "library",
+  user: process.env.USER,
+  database: process.env.DATABASE,
   password: process.env.PASS,
 });
 
